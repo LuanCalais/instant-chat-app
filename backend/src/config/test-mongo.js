@@ -2,8 +2,7 @@ import mongoose from "mongoose";
 
 mongoose
   .connect(
-    "mongodb+srv://luancalais:HS9uQkuDAqz2OdRU@cluster0.4jlztp1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-  )
+    "mongodb+srv://luancalais:jmaTS3NJO5EmTWaL@cluster0.rauyjrx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
   .then(() => {
     console.log("✅ MongoDB can be connected");
   })
