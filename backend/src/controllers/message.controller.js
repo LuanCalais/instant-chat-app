@@ -1,4 +1,4 @@
-import User from "../models/user.model";
+import User from "../models/user.model.js";
 import Message from "../models/message.model.js";
 import cloudnary from "../lib/cloudnary.js";
 
