@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { useAuthStore } from "../store/useAuthStore";
+// import { useAuthStore } from "../store/useAuthStore";
 import { Eye, EyeOff, Lock, Mail, MessageSquare, User } from "lucide-react";
+import { Link } from "react-router-dom";
+import AuthImagePattern from "../components/AuthImagePattern";
 
 const Signup = () => {
-  const { signup, isSigningUp } = useAuthStore();
+  // const { signup, isSigningUp } = useAuthStore();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -13,7 +15,7 @@ const Signup = () => {
     password: "",
   });
 
-  const validateForm = () => {};
+  // const validateForm = () => {};
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -112,8 +114,23 @@ const Signup = () => {
               </div>
             </div>
           </form>
+
+          <div className="text-center">
+            <p className="text-base-content/60">
+              Already have an account?{" "}
+              <Link to="/login" className="link link-primary">
+                Log in
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
+
+      <AuthImagePattern 
+        title="Join Us"
+        description="Create your account to start exploring our platform."
+      />            
+
     </div>
   );
 };
