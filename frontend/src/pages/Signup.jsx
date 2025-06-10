@@ -1,11 +1,20 @@
 import { useState } from "react";
-// import { useAuthStore } from "../store/useAuthStore";
-import { Eye, EyeOff, Lock, Mail, MessageSquare, User } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  Loader2,
+  Lock,
+  Mail,
+  MessageSquare,
+  User,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import AuthImagePattern from "../components/AuthImagePattern";
+import toast from "react-hot-toast";
+import { useAuthStore } from "../store/useAuthStore";
 
 const Signup = () => {
-  // const { signup, isSigningUp } = useAuthStore();
+  const { signup, isSigningUp } = useAuthStore();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -15,10 +24,24 @@ const Signup = () => {
     password: "",
   });
 
-  // const validateForm = () => {};
+  const validateForm = () => {
+    if (!formData.fullName || !formData.email || !formData.password) {
+      return toast.error("All fields are required.");
+    }
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      return toast.error("Please enter a valid email address.");
+    }
+    if (formData.password.length < 6) {
+      return toast.error("Password must be at least 6 characters long.");
+    }
+
+    return true;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const success = validateForm();
+    if (success === true) signup(formData);
   };
 
   return (
@@ -113,6 +136,19 @@ const Signup = () => {
                 </button>
               </div>
             </div>
+            <button
+              type="submit"
+              className="btn btn-primary w-full"
+              disabled={isSigningUp}
+            >
+              {isSigningUp ? (
+                <>
+                  <Loader2 className="size-5 animate-spin" />
+                </>
+              ) : (
+                "Create Account"
+              )}
+            </button>
           </form>
 
           <div className="text-center">
@@ -126,11 +162,10 @@ const Signup = () => {
         </div>
       </div>
 
-      <AuthImagePattern 
+      <AuthImagePattern
         title="Join Us"
         description="Create your account to start exploring our platform."
-      />            
-
+      />
     </div>
   );
 };
