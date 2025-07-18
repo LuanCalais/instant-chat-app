@@ -57,5 +57,10 @@ export const useAuthStore = create((set) => ({
         } finally {
             set({ authUser: null })
         }
+    },
+
+    updateProfile: async () => {
+
     }
+
 }))
