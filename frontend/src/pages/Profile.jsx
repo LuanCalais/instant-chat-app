@@ -1,23 +1,30 @@
 import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import { Camera, Mail, User } from "lucide-react";
+import imageCompression from "browser-image-compression";
 
 const Profile = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
 
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
 
-    const reader = new FileReader();
+    try {
+      const compressedFile = await imageCompression(file, {
+        maxSizeMB: 0.5,
+        maxWidthOrHeight: 800,
+        useWebWorker: true,
+      });
 
-    reader.readAsDataURL(file);
+      const base64 = await imageCompression.getDataUrlFromFile(compressedFile);
+      setSelectedImage(base64);
+      await updateProfile({ profilePic: base64 });
 
-    reader.onload = async () => {
-      const base64 = reader.result;
-      setSelectedImage(base64)
-      await updateProfile({ profileImage: base64 });
+    } catch (error) {
+      console.error("Error reading file:", error);
+      return;
     }
   };
 
@@ -33,7 +40,7 @@ const Profile = () => {
           <div className="flex flex-col items-center gap-4">
             <div className="relative">
               <img
-                src={selectedImage ||authUser?.profileImage || "/avatar.png"}
+                src={selectedImage || authUser?.profileImage || "/avatar.png"}
                 alt="Profile"
                 className="size-32 rounded-full object-cover border-4"
               />

@@ -1,6 +1,7 @@
 import { generateToken } from "../lib/utils.js";
 import User from "../models/user.model.js"
 import bcrypt from "bcryptjs"
+import cloudnary from "../lib/cloudnary.js";
 
 export const signup = async (req, res) => {
   const { fullName, email, password } = req.body;
@@ -93,7 +94,7 @@ export const updateUserProfile = async (req, res) => {
 
     if (!profilePic) return res.status(400).json({ message: "Profile pic is required" });
 
-    const uplodaResponse = await cloludary.uploader.upload(profilePic)
+    const uplodaResponse = await cloudnary.uploader.upload(profilePic)
     const updateUser = await User.findByIdAndUpdate(userId, { profilePic: uplodaResponse.secure_url }, { new: true })
     res.status(200).json(updateUser)
 
