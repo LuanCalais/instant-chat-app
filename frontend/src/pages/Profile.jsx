@@ -20,7 +20,7 @@ const Profile = () => {
 
       const base64 = await imageCompression.getDataUrlFromFile(compressedFile);
       setSelectedImage(base64);
-      await updateProfile({ profilePic: base64 });
+      await updateProfile({ profilePicture: base64 });
 
     } catch (error) {
       console.error("Error reading file:", error);
@@ -40,7 +40,7 @@ const Profile = () => {
           <div className="flex flex-col items-center gap-4">
             <div className="relative">
               <img
-                src={selectedImage || authUser?.profileImage || "/avatar.png"}
+                src={selectedImage || authUser?.profilePicture || "/avatar.png"}
                 alt="Profile"
                 className="size-32 rounded-full object-cover border-4"
               />

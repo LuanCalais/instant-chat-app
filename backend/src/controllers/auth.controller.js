@@ -39,7 +39,7 @@ export const signup = async (req, res) => {
         _id: newUser._id,
         fullName: newUser.fullName,
         email: newUser.email,
-        profilePic: newUser.profilePic,
+        profilePicture: newUser.profilePicture,
       });
     } else {
       res.status(400).json({ message: "Invalid user data" });
@@ -67,7 +67,7 @@ export const login = async (req, res) => {
       _id: user._id,
       fullName: user.fullName,
       email: user.email,
-      profilePic: user.profilePic,
+      profilePicture: user.profilePicture,
     })
   } catch (error) {
     console.log("Error in login controller", error.message);
@@ -89,13 +89,13 @@ export const logout = (req, res) => {
 export const updateUserProfile = async (req, res) => {
   try {
 
-    const { profilePic } = req.body
+    const { profilePicture } = req.body
     const userId = req.user._id
 
-    if (!profilePic) return res.status(400).json({ message: "Profile pic is required" });
+    if (!profilePicture) return res.status(400).json({ message: "Profile pic is required" });
 
-    const uplodaResponse = await cloudnary.uploader.upload(profilePic)
-    const updateUser = await User.findByIdAndUpdate(userId, { profilePic: uplodaResponse.secure_url }, { new: true })
+    const uplodaResponse = await cloudnary.uploader.upload(profilePicture)
+    const updateUser = await User.findByIdAndUpdate(userId, { profilePicture: uplodaResponse.secure_url }, { new: true })
     res.status(200).json(updateUser)
 
   } catch (error) {
