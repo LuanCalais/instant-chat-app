@@ -23,7 +23,7 @@ const Navbar = () => {
 
           <div className="flex items-center gap-2">
             <Link
-              to="/"
+              to="/settings"
               className="btn btn-sm btn-ghost hover:opacity-80 transition-color"
             >
               <Settings className="size-4" />
