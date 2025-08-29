@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare } from "lucide-react";
 import AuthImagePattern from "../components/AuthImagePattern";
 
@@ -10,11 +10,19 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
+
   const { login, isLoggingIn } = useAuthStore();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(formData);
+    const success = login(formData);
+    if (success) {
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    }
   };
 
   return (

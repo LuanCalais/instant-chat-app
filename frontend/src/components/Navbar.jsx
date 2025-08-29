@@ -1,9 +1,20 @@
 import { useAuthStore } from "../store/useAuthStore";
 import { LogOut, MessageSquare, Settings, User } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { logout, authUser } = useAuthStore();
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    const success = logout();
+    if (success) {
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
+    }
+  };
 
   return (
     <header className="bg-base-100 border-b border-base-300 fixed w-full top-0 z-40 backdrop-blur-lg bg-base-100/80">
@@ -22,16 +33,15 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            <Link
-              to="/settings"
-              className="btn btn-sm btn-ghost hover:opacity-80 transition-color"
-            >
-              <Settings className="size-4" />
-              <span className="hidden sm:inline">Settings</span>
-            </Link>
-
             {authUser && (
               <>
+                <Link
+                  to="/settings"
+                  className="btn btn-sm btn-ghost hover:opacity-80 transition-color"
+                >
+                  <Settings className="size-4" />
+                  <span className="hidden sm:inline">Settings</span>
+                </Link>
                 <Link
                   to="/profile"
                   className="btn btn-sm btn-ghost hover:opacity-80 transition-color"
@@ -42,7 +52,7 @@ const Navbar = () => {
 
                 <button
                   className="btn btn-sm btn-ghost hover:opacity-80 transition-color"
-                  onClick={logout}
+                  onClick={handleLogout}
                   type="button"
                 >
                   <LogOut className="size-4" />

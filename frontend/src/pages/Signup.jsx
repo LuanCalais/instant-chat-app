@@ -8,7 +8,7 @@ import {
   MessageSquare,
   User,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthImagePattern from "../components/AuthImagePattern";
 import toast from "react-hot-toast";
 import { useAuthStore } from "../store/useAuthStore";
@@ -23,6 +23,8 @@ const Signup = () => {
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const validateForm = () => {
     if (!formData.fullName || !formData.email || !formData.password) {
@@ -41,7 +43,14 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const success = validateForm();
-    if (success === true) signup(formData);
+    if (success === true) {
+      const success = signup(formData);
+      if (success) {
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      }
+    }
   };
 
   return (
