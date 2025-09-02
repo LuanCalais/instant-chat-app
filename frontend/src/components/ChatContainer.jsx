@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useChatStore } from "../store/useChatStore";
 import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
+import MessagesSqueletonComponent from "./skeletons/MessagesSqueletonComponent";
 
 const ChatContainer = () => {
   const { messages, getMessages, isMessagesLoading, selectedUser } =
@@ -13,7 +14,13 @@ const ChatContainer = () => {
     getMessages(selectedUser._id);
   }, [getMessages, selectedUser._id]);
 
-  if (isMessagesLoading) return <div>Loading messages...</div>;
+  if (isMessagesLoading) return (
+    <div className="flex-1 flex flex-col overflow-auto">
+      <ChatHeader />
+      <MessagesSqueletonComponent />
+      <MessageInput />
+    </div>
+  )
 
   return (
     <div className="flex-1 flex flex-col overflow-auto">
