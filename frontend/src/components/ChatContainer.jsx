@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useChatStore } from "../store/useChatStore";
 import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
-import MessagesSqueletonComponent from "./skeletons/MessagesSqueletonComponent";
+import ChatMessagesSqueleton from "./skeletons/ChatMessagesSqueleton";
 
 const ChatContainer = () => {
   const { messages, getMessages, isMessagesLoading, selectedUser } =
@@ -17,7 +17,7 @@ const ChatContainer = () => {
   if (isMessagesLoading) return (
     <div className="flex-1 flex flex-col overflow-auto">
       <ChatHeader />
-      <MessagesSqueletonComponent />
+      <ChatMessagesSqueleton />
       <MessageInput />
     </div>
   )

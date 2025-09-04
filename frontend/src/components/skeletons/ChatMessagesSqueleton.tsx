@@ -1,4 +1,4 @@
-const MessagesSqueletonComponent = () => {
+const ChatMessagesSqueleton = () => {
   const skeletonMessages = Array(6).fill(null);
 
   return (
@@ -24,4 +24,4 @@ const MessagesSqueletonComponent = () => {
   );
 };
 
-export default MessagesSqueletonComponent;
+export default ChatMessagesSqueleton;
